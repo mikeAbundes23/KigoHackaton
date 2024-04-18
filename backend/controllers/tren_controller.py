@@ -7,12 +7,13 @@ from model.tren_model import get_all_trenes, get_tren_by_id, get_tren_by_matricu
 from apscheduler.schedulers.background import BackgroundScheduler
 import random
 
-tren_controller = Blueprint('tren_controller', __name__)
+tren_blueprint = Blueprint('tren_blueprint', __name__)
 
 # Crea un planificador de tareas de fondo
 scheduler = BackgroundScheduler()
 
-@tren_controller.route('/api/auth/trenes', methods=['GET'])
+
+@tren_blueprint.route('/api/auth/trenes', methods=['GET'])
 @cross_origin()
 def get_all_trenes():
     trenes_query = get_all_trenes()
@@ -20,7 +21,7 @@ def get_all_trenes():
 
     for tren in trenes_query:
         trenes.append({
-            'idTren': tren.idTren,
+            'idtren': tren.idtren,
             'linea': tren.linea,
             'estacion': tren.estacion,
             'concurrencia': tren.concurrencia,
@@ -34,14 +35,14 @@ def get_all_trenes():
 
     return jsonify(trenes)
 
-@tren_controller.route('/api/auth/tren/id/<id>', methods=['GET'])
+@tren_blueprint.route('/api/auth/tren/id/<id>', methods=['GET'])
 @cross_origin()
 def tren_by_id(id):
     tren = get_tren_by_id(id)
 
     return jsonify(tren)
 
-@tren_controller.route('/api/auth/tren/matricula/<str:matricula>', methods=['GET'])
+@tren_blueprint.route('/api/auth/tren/matricula/<string:matricula>', methods=['GET'])
 @cross_origin()
 def get_tren_by_matricula(matricula):
     tren = get_tren_by_matricula(matricula)
@@ -87,14 +88,14 @@ def update_trenes():
     
     db.session.commit()
 
-""" # Agrega la tarea de actualización al planificador para que se ejecute cada minuto
+# Agrega la tarea de actualización al planificador para que se ejecute cada minuto
 scheduler.add_job(update_trenes, 'interval', minutes=1)
 
 # Inicia el planificador
-scheduler.start() """
+scheduler.start() 
         
 
-@tren_controller.route('/api/auth/tren/<int:id>', methods=['POST'])
+@tren_blueprint.route('/api/auth/tren', methods=['POST'])
 @cross_origin()
 def create_tren():
     data = request.json
@@ -102,9 +103,9 @@ def create_tren():
         linea=data['linea'],
         estacion=data['estacion'],
         concurrencia=data['concurrencia'],
-        fecha=datetime.strptime(data['fecha'], '%Y-%m-%d'),
         capacidad=data['capacidad'],
-        matricula=data['matricula']
+        matricula=data['matricula'],
+        sentido=data['sentido']
     )
 
     db.session.add(tren)
