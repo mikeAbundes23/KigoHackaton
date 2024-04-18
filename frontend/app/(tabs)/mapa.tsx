@@ -18,11 +18,22 @@ export default function App() {
           <TouchableOpacity style={styles.button} onPress={openBottomSheet}>
             <Text style={styles.buttonText}>Botón</Text>
           </TouchableOpacity>
-          <BottomSheetModal ref={bottomSheetModalRef} index={0} snapPoints={['15%', '50%', '75%']}>
-            <BottomSheetView style={styles.bottomSheet}>
-              <Text style={[styles.bottomSheetText, styles.bigText]}>INDIOS VERDES</Text>
-            </BottomSheetView>
-          </BottomSheetModal>
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={0}
+            snapPoints={['15%', '50%', '75%']}
+            backgroundComponent={({ style }) => (
+              <View style={[style, styles.modalBackground, styles.roundedContainer]} />
+            )}
+          >
+            <View>
+              <BottomSheetView style={styles.bottomSheet}>
+                <Text style={[styles.bottomSheetText, styles.bigText]}>INDIOS VERDES</Text>
+                <View style={styles.line}></View>
+              </BottomSheetView>
+  </View>
+</BottomSheetModal>
+
         </View>
       </BottomSheetModalProvider>
     </SafeAreaView>
@@ -53,15 +64,30 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   bottomSheet: {
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     padding: 16,
   },
   bottomSheetText: {
     fontSize: 20,
+    color: 'white', 
   },
   bigText: {
     fontSize: 30,
     textAlign: 'left', 
     fontWeight : 'bold',
+  },
+  modalBackground: {
+    backgroundColor: 'rgba(0, 0, 0, 100)', 
+  },
+  roundedContainer: {
+    flex: 1,
+    borderTopLeftRadius: 35, 
+    borderTopRightRadius: 35, 
+  },
+  line: {
+    height: 5,
+    backgroundColor: '#0570b6', 
+    marginTop: 10, 
+    marginBottom: 10, 
   },
 });

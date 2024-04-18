@@ -1,12 +1,8 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Stack, Tabs } from "expo-router";
-import { Pressable } from "react-native";
-import Mapa from "./mapa"
+import { FontAwesome5 } from '@expo/vector-icons';
 
-import Colors from "@/constants/Colors";
-
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
@@ -15,11 +11,18 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  return <Tabs screenOptions={{}}>
-    <Tabs.Screen name= "mapa" options={{
-      headerShown : false,
-    }}
-    />
+  return <Tabs screenOptions={{
+    tabBarStyle : {backgroundColor : 'black'}
+  }}>
+     <Tabs.Screen
+        name="mapa"
+        options={{
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="map-marker-alt" size={24} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
     <Tabs.Screen name= "home" options={{
       headerShown : false,
     }}
