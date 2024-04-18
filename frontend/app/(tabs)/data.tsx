@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 
@@ -7,8 +7,13 @@ const Data = () => {
     <View>
       <StatusBar style="dark" />
 
-      <Text>Hola</Text>
+      <Text>Charlyjoe</Text>
+      <Text style= {{
+        fontSize : 40
+      }}>Anshar</Text>
+      
     </View>
+
   );
 };
 
