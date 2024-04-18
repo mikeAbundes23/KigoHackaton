@@ -98,17 +98,22 @@ scheduler.start()
 @tren_blueprint.route('/api/auth/tren', methods=['POST'])
 @cross_origin()
 def create_tren():
-    data = request.json
-    tren = Tren(
-        linea=data['linea'],
-        estacion=data['estacion'],
-        concurrencia=data['concurrencia'],
-        capacidad=data['capacidad'],
-        matricula=data['matricula'],
-        sentido=data['sentido']
+    linea = request.json.get('linea', None)
+    estacion = request.json.get('estacion', None)
+    concurrencia = request.json.get('concurrencia', None)
+    capacidad = request.json.get('capacidad', None)
+    matricula = request.json.get('matricula', None)
+
+    print(
+        f'linea: {linea}\nestacion: {estacion}\nconcurrencia: {concurrencia}\ncapacidad: {capacidad}\nmatricula: {matricula}'
     )
 
-    db.session.add(tren)
-    db.session.commit()
+    new_tren = Tren(linea, estacion, concurrencia, capacidad, matricula)
 
-    return jsonify({'message': 'Tren creado correctamente'})
+    try:
+        db.session.add(new_tren)
+        db.session.commit()
+
+        return make_response('Tren creado', 201)
+    except Exception as e:
+        return make_response('Error al crear el tren', 400)
