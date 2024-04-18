@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import MapView from 'react-native-maps';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
 
 export default function App() {
@@ -11,23 +11,29 @@ export default function App() {
   };
 
   return (
-    <BottomSheetModalProvider>
-      <View style={styles.container}>
-        <MapView style={styles.map} />
-        <TouchableOpacity style={styles.button} onPress={openBottomSheet}>
-          <Text style={styles.buttonText}>Botón</Text>
-        </TouchableOpacity>
-        <BottomSheetModal ref={bottomSheetModalRef} index={0} snapPoints={['25%', '50%', '75%']}>
-          <BottomSheetView style={styles.bottomSheet}>
-            <Text style={styles.bottomSheetText}>Contenido del Modal</Text>
-          </BottomSheetView>
-        </BottomSheetModal>
-      </View>
-    </BottomSheetModalProvider>
+    <SafeAreaView style={styles.safeArea}>
+      <BottomSheetModalProvider>
+        <View style={styles.container}>
+          <MapView style={styles.map} />
+          <TouchableOpacity style={styles.button} onPress={openBottomSheet}>
+            <Text style={styles.buttonText}>Botón</Text>
+          </TouchableOpacity>
+          <BottomSheetModal ref={bottomSheetModalRef} index={0} snapPoints={['15%', '50%', '75%']}>
+            <BottomSheetView style={styles.bottomSheet}>
+              <Text style={[styles.bottomSheetText, styles.bigText]}>INDIOS VERDES</Text>
+            </BottomSheetView>
+          </BottomSheetModal>
+        </View>
+      </BottomSheetModalProvider>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
   container: {
     flex: 1,
     position: 'relative',
@@ -52,5 +58,10 @@ const styles = StyleSheet.create({
   },
   bottomSheetText: {
     fontSize: 20,
+  },
+  bigText: {
+    fontSize: 30,
+    textAlign: 'left', 
+    fontWeight : 'bold',
   },
 });
