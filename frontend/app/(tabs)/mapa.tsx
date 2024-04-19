@@ -96,7 +96,11 @@ export default function App() {
                 setStationSelected(station.name);
               }}
               >
-              <Image source={station.image} style={{ width: 37, height: 37 }} />
+              <Image 
+                source={station.image} 
+                style={{ width: 37, height: 37, borderRadius: 100 }} 
+                resizeMode={"cover"} 
+              />
             </Marker>
           ))}
         </MapView>
