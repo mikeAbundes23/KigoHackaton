@@ -1,7 +1,7 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Stack, Tabs } from "expo-router";
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Tabs } from "expo-router";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -11,25 +11,43 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  return <Tabs screenOptions={{
-    tabBarStyle : {backgroundColor : 'black'}
-  }}>
-     <Tabs.Screen
+  return (
+    <Tabs
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: "black",
+          borderTopColor: "#666",
+          borderTopWidth: 0.2,
+        },
+      }}
+      initialRouteName="mapa">
+      <Tabs.Screen
+        name="index"
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons name="home" size={26} color={color} />
+          ),
+          tabBarLabelStyle: { fontFamily: "inter-r", fontSize: 11 },
+          tabBarLabel: "Inicio",
+        }}
+      />
+      <Tabs.Screen
         name="mapa"
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="map-marker-alt" size={24} color={color} />
+            <Ionicons name="location" size={26} color={color} />
           ),
+          headerShown: false,
+          tabBarLabelStyle: { fontFamily: "inter-r", fontSize: 11 },
+        }}
+      />
+      <Tabs.Screen
+        name="data"
+        options={{
           headerShown: false,
         }}
       />
-    <Tabs.Screen name= "home" options={{
-      headerShown : false,
-    }}
-    />
-    <Tabs.Screen name= "data" options={{
-      headerShown : false,
-    }}
-    />
-  </Tabs>;
+    </Tabs>
+  );
 }

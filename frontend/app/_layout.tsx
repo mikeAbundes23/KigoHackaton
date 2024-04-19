@@ -1,15 +1,9 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler"; 
-import Mapa from "../app/(tabs)/mapa"
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,9 +42,11 @@ export default function RootLayout() {
     return null;
   }
 
-  return <GestureHandlerRootView style= {{flex : 1}}>
-    <RootLayoutNav /> 
-    </GestureHandlerRootView>;
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <RootLayoutNav />
+    </GestureHandlerRootView>
+  );
 }
 
 function RootLayoutNav() {
