@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import MapView, { Polyline, Marker } from "react-native-maps";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { Station } from "@/interfaces";
 import { StatusBar } from "expo-status-bar";
+import ProgressBar from '../ProgressBar'; 
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -95,7 +95,7 @@ export default function App() {
                 handleSnapPress(0);
                 setStationSelected(station.name);
               }}
-              title={station.name}>
+              >
               <Image source={station.image} style={{ width: 37, height: 37 }} />
             </Marker>
           ))}
@@ -129,12 +129,28 @@ export default function App() {
               {stationSelected}
             </Text>
             <View style={styles.line}></View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View>
+            <Text style={[styles.bottomSheetText, styles.smallText]}>
+                Direccion Indios Verdes{"\n"}
+                Tiempo para siguiente metro:{" "}
+                <Text style={[styles.bottomSheetText]}>7 min</Text>
+            </Text>
+            </View>
+            </View>
+            <ProgressBar stepCount={4} currStep={2} colorScheme="light" />
+
+<View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+  <Text style={[styles.bottomSheetText,  styles.smallText]}>Capacidad: </Text>
+  <Text style={[styles.bottomSheetText, { marginTop: 15 }]}>50%</Text>
+</View>
           </BottomSheetView>
         </BottomSheet>
       </View>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -165,6 +181,7 @@ const styles = StyleSheet.create({
   bottomSheetText: {
     fontSize: 20,
     color: "white",
+    fontFamily: "inter-b",
   },
   bigText: {
     fontSize: 30,
@@ -172,6 +189,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "inter-sb",
     alignSelf: "center",
+  },
+  
+  smallText: {
+    fontSize: 16,
+    textAlign: "left",
+    fontWeight: "normal",
+    fontFamily: "inter-r",
+    //alignSelf: "center",
+    marginTop: 20,
+
   },
   modalBackground: {
     backgroundColor: "rgba(0, 0, 0, .75)",
