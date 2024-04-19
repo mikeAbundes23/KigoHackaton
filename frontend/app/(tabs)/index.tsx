@@ -51,11 +51,11 @@ const Home = () => {
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
       <View style={styles.header}>
-        <Text style={styles.headerText}>Trenes</Text>
+        <Text style={styles.headerText}>Estaciones</Text>
         <Text
           style={[
             styles.headerText,
-            { fontSize: 18, color: "white", fontFamily: "inter-r" },
+            { fontSize: 16, color: "white", fontFamily: "inter-sb" },
           ]}>
           Cuatro Caminos - Tasqueña
         </Text>
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "#3085C3",
-    fontFamily: "inter-sb",
-    fontSize: 24,
+    fontFamily: "inter-b",
+    fontSize: 20,
   },
   trainContainer: {
     flexDirection: "row",
@@ -128,12 +128,12 @@ const styles = StyleSheet.create({
   trainLine: {
     color: "#3085C3",
     fontFamily: "inter-sb",
-    fontSize: 18,
+    fontSize: 16,
   },
   trainRoute: {
     color: "white",
     fontFamily: "inter-sb",
-    fontSize: 18,
+    fontSize: 16,
   },
   congestionText: {
     color: "white",
