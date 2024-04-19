@@ -140,10 +140,10 @@ export default function App() {
             </View>
             <ProgressBar stepCount={4} currStep={2} colorScheme="light" />
 
-<View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-  <Text style={[styles.bottomSheetText,  styles.smallText]}>Capacidad: </Text>
-  <Text style={[styles.bottomSheetText, { marginTop: 15 }]}>50%</Text>
-</View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+              <Text style={[styles.bottomSheetText,  styles.smallText]}>Capacidad: </Text>
+              <Text style={[styles.bottomSheetText, { marginTop: 15 }]}>50%</Text>
+            </View>
           </BottomSheetView>
         </BottomSheet>
       </View>

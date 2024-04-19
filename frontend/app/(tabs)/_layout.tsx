@@ -43,9 +43,14 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="data"
+        name="tren"
         options={{
           headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons name="train" size={26} color={color} />
+          ),
+          tabBarLabelStyle: { fontFamily: "inter-r", fontSize: 11 },
+          tabBarLabel: "Tren",
         }}
       />
     </Tabs>

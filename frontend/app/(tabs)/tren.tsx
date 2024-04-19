@@ -2,48 +2,57 @@ import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native-gesture-handler";
+import { FontAwesome } from '@expo/vector-icons';
 
-const Home = () => {
+const Tren = () => {
   const trains = [
     {
       id: 1,
       line: "Línea 2",
-      route: "Hidalgo",
-      congestion: 65,
-      lastUpdate: "2024-04-12 10:30",
-      image: require("../../assets/images/hidalgo.png"),
+      route: "L2-001",
+      congestion: 42,
+      lastUpdate: "2024-04-12 09:30",
+      station: "Bellas Artes"
     },
     {
       id: 2,
       line: "Línea 2",
-      route: "Bellas Artes",
-      congestion: 80,
-      lastUpdate: "2024-04-12 10:25",
-      image: require("../../assets/images/bellasartes.png"),
+      route: "L2-002",
+      congestion: 87,
+      lastUpdate: "2024-04-12 09:35",
+      station: "Zócalo"
     },
     {
       id: 3,
       line: "Línea 2",
-      route: "Allende",
-      congestion: 50,
-      lastUpdate: "2024-04-12 10:20",
-      image: require("../../assets/images/allende.png"),
+      route: "L2-003",
+      congestion: 55,
+      lastUpdate: "2024-04-12 09:50",
+      station: "Allende"
     },
     {
       id: 4,
       line: "Línea 2",
-      route: "Zócalo",
-      congestion: 30,
-      lastUpdate: "2024-04-12 10:15",
-      image: require("../../assets/images/zocalo.png"),
+      route: "L2-004",
+      congestion: 90,
+      lastUpdate: "2024-04-12 10:05",
+      station: "Hidalgo"
     },
     {
       id: 5,
       line: "Línea 2",
-      route: "Pino Suarez",
-      congestion: 70,
+      route: "L2-005",
+      congestion: 25,
       lastUpdate: "2024-04-12 10:10",
-      image: require("../../assets/images/pinosuarez.png"),
+      station: "Pino Suárez"
+    },
+    {
+      id: 6,
+      line: "Línea 2",
+      route: "L2-006",
+      congestion: 19,
+      lastUpdate: "2024-04-12 10:30",
+      station: "Bellas Artes"
     },
   ];
 
@@ -51,7 +60,7 @@ const Home = () => {
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
       <View style={styles.header}>
-        <Text style={styles.headerText}>Estaciones</Text>
+        <Text style={styles.headerText}>Trenes</Text>
         <Text
           style={[
             styles.headerText,
@@ -64,16 +73,14 @@ const Home = () => {
         {trains.map((train) => (
           <View key={train.id} style={styles.trainContainer}>
             <View style={styles.trainInfo}>
-              <Image
-                source={train.image}
-                style={{
-                  width: 50,
-                  height: 50,
-                }}
-              />
+              <FontAwesome name="train" size={38} color="white" />
+              
               <Text style={styles.trainRoute}>{train.route}</Text>
             </View>
             <View style={styles.trainStatus}>
+              <Text style={styles.congestionText}>
+                Estación: {train.station}
+              </Text>
               <Text style={styles.congestionText}>
                 Congestión: {train.congestion}%
               </Text>
@@ -88,7 +95,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Tren;
 
 const styles = StyleSheet.create({
   container: {
