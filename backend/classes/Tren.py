@@ -1,5 +1,5 @@
 from classes import db
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, Integer, String, DateTime
 from datetime import datetime
 
 class Tren(db.Model):
@@ -9,7 +9,7 @@ class Tren(db.Model):
     linea = Column(Integer)
     estacion = Column(Integer)
     concurrencia = Column(Integer)
-    fecha = Column(Date, default=datetime.now, onupdate=datetime.now)
+    fecha = Column(DateTime, default=datetime.now, onupdate=datetime.now)
     capacidad = Column(Integer)
     matricula = Column(String, unique=True)
     sentido = Column(String(1))

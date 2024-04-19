@@ -4,18 +4,13 @@ from classes.Tren import Tren
 from classes import db
 from datetime import datetime
 from model.tren_model import get_all_trenes, get_tren_by_id, get_tren_by_matricula
-from apscheduler.schedulers.background import BackgroundScheduler
 import random
 
 tren_blueprint = Blueprint('tren_blueprint', __name__)
 
-# Crea un planificador de tareas de fondo
-scheduler = BackgroundScheduler()
-
-
 @tren_blueprint.route('/api/auth/trenes', methods=['GET'])
 @cross_origin()
-def get_all_trenes():
+def all_trenes():
     trenes_query = get_all_trenes()
     trenes = []
 
@@ -51,48 +46,31 @@ def get_tren_by_matricula(matricula):
 
 def update_trenes():
     # Obtener todos los trenes
-    trenes_query = get_all_trenes()
-    trenes = []
-
-    for tren in trenes_query:
-        trenes.append({
-            'idTren': tren.idTren,
-            'linea': tren.linea,
-            'estacion': tren.estacion,
-            'concurrencia': tren.concurrencia,
-            'fecha': tren.fecha,
-            'capacidad': tren.capacidad,
-            'matricula': tren.matricula,
-            'sentido': tren.sentido
-        })
+    trenes = get_all_trenes()
 
     for tren in trenes:
-        if(tren.estacion == 5) :
+        if tren.estacion == 5:
             tren.sentido = 'R'
-        elif(tren.estacion == 1):
+        elif tren.estacion == 1:
             tren.sentido = 'I'
 
-        if(tren.sentido == 'R'):
+        if tren.sentido == 'R':
             tren.estacion -= 1
         else:
             tren.estacion += 1
 
-        if(tren.concurrencia < tren.capacidad):
+        if tren.concurrencia < tren.capacidad:
             lugares = tren.capacidad - tren.concurrencia
-            variable += random.randint(-60, 60)
-            
-            if (tren.concurrencia > 0 and variable < 0 and tren.concurrenica + variable  >= 0):
-                tren.concurrecia += variable
-            elif(variable >= 0 and lugares >= variable):
+            variable = random.randint(-60, 60)
+
+            if tren.concurrencia > 0 and variable < 0 and tren.concurrencia + variable >= 0:
                 tren.concurrencia += variable
-    
+            elif variable >= 0 and lugares >= variable:
+                tren.concurrencia += variable
+
+    print("Actualizando trenes")
+
     db.session.commit()
-
-# Agrega la tarea de actualización al planificador para que se ejecute cada minuto
-scheduler.add_job(update_trenes, 'interval', minutes=1)
-
-# Inicia el planificador
-scheduler.start() 
         
 
 @tren_blueprint.route('/api/auth/tren', methods=['POST'])
