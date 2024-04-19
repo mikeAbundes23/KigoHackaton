@@ -1,21 +1,20 @@
 from classes import db
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, Integer, String, DateTime
+from datetime import datetime
 
 class Estacion(db.Model):
 
     __tablename__ = 'estacion'
-    idEstacion = Column(Integer, primary_key=True)
+    idestacion = Column(Integer, primary_key=True, autoincrement=True)
     numero_estacion = Column(Integer)
-    hora = Column(Date)
+    fecha = Column(DateTime, default=datetime.now, onupdate=datetime.now)
     concurrencia = Column(Integer)
     concurrencia_maxima = Column(Integer)
 
-    def __init__(self, linea, estacion, concurrencia, fecha, capacidad):
-        self.linea = linea
-        self.estacion = estacion
+    def __init__(self, numero_estacion, concurrencia, concurrencia_maxima):
+        self.numero_estacion = numero_estacion
         self.concurrencia = concurrencia
-        self.fecha = fecha
-        self.capacidad = capacidad
+        self.concurrencia_maxima = concurrencia_maxima
 
     def __str__(self):
-        return f'id: {self.idMetro}\nlinea: {self.linea}\nestacion: {self.estacion}\nconcurrencia: {self.concurrencia}\nfecha: {self.fecha}\ncapacidad: {self.capacidad}'
+        return f'id: {self.idestacion}\nnumero_estacion: {self.numero_estacion}\nconcurrencia: {self.concurrencia}\nfecha: {self.fecha}\nconcurrencia_maxima: {self.concurrencia_maxima}'

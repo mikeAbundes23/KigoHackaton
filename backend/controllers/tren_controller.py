@@ -81,12 +81,13 @@ def create_tren():
     concurrencia = request.json.get('concurrencia', None)
     capacidad = request.json.get('capacidad', None)
     matricula = request.json.get('matricula', None)
+    sentido = request.json.get('sentido', None)
 
     print(
         f'linea: {linea}\nestacion: {estacion}\nconcurrencia: {concurrencia}\ncapacidad: {capacidad}\nmatricula: {matricula}'
     )
 
-    new_tren = Tren(linea, estacion, concurrencia, capacidad, matricula)
+    new_tren = Tren(linea, estacion, concurrencia, capacidad, matricula, sentido)
 
     try:
         db.session.add(new_tren)

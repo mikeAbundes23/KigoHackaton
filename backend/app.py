@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
 from controllers.tren_controller import tren_blueprint
+from controllers.estacion_controller import estacion_blueprint
 from apscheduler.schedulers.background import BackgroundScheduler
 from classes import db
 
@@ -12,6 +13,7 @@ load_dotenv()
 # Inicializar la aplicación Flask
 app = Flask(__name__)
 app.register_blueprint(tren_blueprint)
+app.register_blueprint(estacion_blueprint)
 
 # Configurar la base de datos SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB_URI')
@@ -21,6 +23,12 @@ db.init_app(app)
 # Crear un planificador de tareas de fondo
 scheduler = BackgroundScheduler()
 
+# Función para actualizar las estaciones
+def update_estaciones():
+    with app.app_context():
+        from controllers.estacion_controller import update_estaciones as update_estaciones_func
+        update_estaciones_func()
+
 # Función para actualizar los trenes
 def update_trenes():
     with app.app_context():
@@ -29,6 +37,8 @@ def update_trenes():
 
 # Agregar la tarea de actualización al planificador para que se ejecute cada minuto
 scheduler.add_job(update_trenes, 'interval', minutes=1)
+scheduler.add_job(update_estaciones, 'interval', minutes=1)
+
 
 # Iniciar el planificador
 scheduler.start()
