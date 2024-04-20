@@ -74,7 +74,7 @@ def update_estaciones():
 
         if estacion.concurrencia < estacion.concurrencia_maxima:
             lugares = estacion.concurrencia_maxima - estacion.concurrencia
-            variable = random.randint(-60, 60)
+            variable = random.randint(-10, 10)
 
             if estacion.concurrencia > 0 and variable < 0 and estacion.concurrencia + variable >= 0:
                 estacion.concurrencia += variable

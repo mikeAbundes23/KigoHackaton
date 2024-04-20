@@ -61,7 +61,7 @@ def update_trenes():
 
         if tren.concurrencia < tren.capacidad:
             lugares = tren.capacidad - tren.concurrencia
-            variable = random.randint(-60, 60)
+            variable = random.randint(-10, 10)
 
             if tren.concurrencia > 0 and variable < 0 and tren.concurrencia + variable >= 0:
                 tren.concurrencia += variable
