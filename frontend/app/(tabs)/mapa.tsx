@@ -10,8 +10,8 @@ import {
 import MapView, { Polyline, Marker } from "react-native-maps";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { StatusBar } from "expo-status-bar";
-import ProgressBar from '../ProgressBar'; 
-import { FontAwesome5 } from '@expo/vector-icons';
+import ProgressBar from "../ProgressBar";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,7 +19,7 @@ export default function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [stationSelected, setStationSelected] = useState<string>("");
 
-  const snapPoints = isOpen ? ["50%"] : [0.1];
+  const snapPoints = isOpen ? ["55%"] : [0.1];
 
   const handleSnapPress = useCallback((index: number) => {
     sheetRef.current?.snapToIndex(index);
@@ -29,7 +29,7 @@ export default function App() {
   const coordinates = [
     { latitude: 19.0329, longitude: -98.2687 }, // Terminal Tlaxcalancingo
     { latitude: 19.0335, longitude: -98.2626 }, // 01 Emiliano Zapata
-    { latitude: 19.0350, longitude: -98.2583 }, // 02 Casa de Angeles
+    { latitude: 19.035, longitude: -98.2583 }, // 02 Casa de Angeles
     { latitude: 19.0363, longitude: -98.2513 }, // 03 Carmen Serdán
     { latitude: 19.0373, longitude: -98.2476 }, // 04 Niño Poblano
     { latitude: 19.0393, longitude: -98.2416 }, // 05 Estrellas del Sur
@@ -48,7 +48,7 @@ export default function App() {
     }, // 01 Emiliano Zapata
     {
       name: "Casa de Angeles",
-      latitude: 19.0350,
+      latitude: 19.035,
       longitude: -98.2583,
     }, // 02 Casa de Angeles
     {
@@ -79,7 +79,8 @@ export default function App() {
             longitude: -98.2553,
             latitudeDelta: 0.055,
             longitudeDelta: 0.025,
-          }}>
+          }}
+        >
           <Polyline
             coordinates={coordinates}
             strokeColor="orange" // Color
@@ -97,13 +98,18 @@ export default function App() {
                 handleSnapPress(0);
                 setStationSelected(station.name);
               }}
+            >
+              <View
+                style={{
+                  width: 37,
+                  height: 37,
+                  backgroundColor: "white",
+                  borderRadius: 100,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
-              <View style={{ width: 37, height: 37, backgroundColor: "white", borderRadius: 100, alignItems: "center", justifyContent: "center"}}>
-                <FontAwesome5 
-                  name="bus" 
-                  size={30} 
-                  color="orange" 
-                />
+                <FontAwesome5 name="bus" size={30} color="orange" />
               </View>
             </Marker>
           ))}
@@ -131,27 +137,69 @@ export default function App() {
                 marginTop: 15,
               }}
             />
-          )}>
+          )}
+        >
           <BottomSheetView style={styles.bottomSheet}>
-            <Text style={[styles.bottomSheetText, styles.bigText]}>
-              {stationSelected}
-            </Text>
-            <View style={styles.line}></View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View>
-            <Text style={[styles.bottomSheetText, styles.smallText]}>
-                Direccion Chachapa{"\n"}
-                Tiempo para siguiente metro:{" "}
-                <Text style={[styles.bottomSheetText]}>7 min</Text>
-            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={[styles.bottomSheetText, styles.bigText]}>
+                {stationSelected}
+              </Text>
+              <FontAwesome5 name="bus" size={45} color="orange" />
             </View>
-            </View>
-            <ProgressBar stepCount={4} currStep={2} colorScheme="light" />
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-              <Text style={[styles.bottomSheetText,  styles.smallText]}>Capacidad: </Text>
-              <Text style={[styles.bottomSheetText, { marginTop: 15 }]}>50%</Text>
+            <View style={styles.line}></View>
+            <View style={[styles.minimalistContainer, styles.sectionContainer]}>
+              <View style={styles.progressSection}>
+                <Text style={[styles.bottomSheetText, styles.smallText]}>
+                  Direccion Chacapa{"\n"}
+                  Siguiente metro:{" "}
+                  <Text style={[styles.bottomSheetText]}>7 min</Text>
+                </Text>
+                <ProgressBar stepCount={4} currStep={2} colorScheme="light" />
+              </View>
+              <View>
+                <Text style={[styles.bottomSheetText, styles.smallTextSecond]}>
+                  Capacidad:{" "}
+                </Text>
+                <Text style={[styles.bottomSheetText]}>50%</Text>
+              </View>
             </View>
+            <View style={[styles.minimalistContainer, styles.sectionContainer]}>
+  <View style={styles.progressSection}>
+    <Text style={[styles.bottomSheetText, styles.smallText]}>
+      Direccion Tlaxcalancingo{"\n"}
+      Siguiente metro:{" "}
+      <Text style={[styles.bottomSheetText]}>2 min</Text>
+    </Text>
+    <ProgressBar stepCount={4} currStep={3} colorScheme="light" />
+  </View>
+  <View>
+    <Text style={[styles.bottomSheetText, styles.smallTextSecond]}>
+      Capacidad:{" "}
+    </Text>
+    <Text style={[styles.bottomSheetText]}>22%</Text>
+  </View>
+</View>
+<View style={styles.buttonContainer}>
+  <TouchableOpacity
+    style={[styles.button]}
+    onPress={() => {
+      // Función para manejar la acción del botón
+    }}
+  >
+    <Text style={[styles.buttonText, { fontWeight: "bold", color: "white" }]}>
+      Check More Info
+    </Text>
+  </TouchableOpacity>
+</View>
+
+            
           </BottomSheetView>
         </BottomSheet>
       </View>
@@ -159,8 +207,42 @@ export default function App() {
   );
 }
 
-
 const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 10, 
+  },
+  button: {
+    marginTop: 10,
+    backgroundColor: "#cf6209",  //#b95504
+    paddingVertical: 8, 
+    paddingHorizontal: 20, 
+    borderRadius: 10, 
+    alignSelf: "stretch", 
+    width: "90%",
+    alignItems: "center",
+    height: 45,
+    justifyContent: "center",
+  },
+  
+  
+  minimalistContainer: {
+    backgroundColor: "#1e1e1e",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#303030",
+    padding: 10,
+    marginBottom: 10,
+  },
+  sectionContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  progressSection: {
+    flex: 1,
+  },
   safeArea: {
     flex: 1,
     backgroundColor: "black",
@@ -172,14 +254,7 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  button: {
-    position: "absolute",
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 5,
-    top: 20,
-    left: 20,
-  },
+ 
   buttonText: {
     color: "white",
   },
@@ -198,7 +273,7 @@ const styles = StyleSheet.create({
     fontFamily: "inter-sb",
     alignSelf: "center",
   },
-  
+
   smallText: {
     fontSize: 16,
     textAlign: "left",
@@ -206,7 +281,12 @@ const styles = StyleSheet.create({
     fontFamily: "inter-r",
     //alignSelf: "center",
     marginTop: 20,
-
+  },
+  smallTextSecond: {
+    fontSize: 16,
+    textAlign: "left",
+    fontWeight: "normal",
+    fontFamily: "inter-r",
   },
   modalBackground: {
     backgroundColor: "rgba(0, 0, 0, .75)",
@@ -218,7 +298,7 @@ const styles = StyleSheet.create({
   },
   line: {
     height: 5,
-    backgroundColor: "#0570b6",
+    backgroundColor: "orange",
     width: "100%",
     marginTop: 10,
     marginBottom: 10,
