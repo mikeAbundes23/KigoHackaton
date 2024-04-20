@@ -5,38 +5,38 @@ import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const Home = () => {
-  const trains = [
+  const buses = [
     {
       id: 1,
-      line: "Línea 2",
+      line: "Línea 1",
       route: "Tlaxcalancingo",
       congestion: 65,
       lastUpdate: "2024-04-12 10:30",
     },
     {
       id: 2,
-      line: "Línea 2",
+      line: "Línea 1",
       route: "Emiliano Zapata",
       congestion: 80,
       lastUpdate: "2024-04-12 10:25",
     },
     {
       id: 3,
-      line: "Línea 2",
+      line: "Línea 1",
       route: "Casa de Angeles",
       congestion: 50,
       lastUpdate: "2024-04-12 10:20",
     },
     {
       id: 4,
-      line: "Línea 2",
+      line: "Línea 1",
       route: "Carmen Serdán",
       congestion: 30,
       lastUpdate: "2024-04-12 10:15",
     },
     {
       id: 5,
-      line: "Línea 2",
+      line: "Línea 1",
       route: "Niño Poblano",
       congestion: 70,
       lastUpdate: "2024-04-12 10:10",
@@ -61,18 +61,18 @@ const Home = () => {
         </Text>
       </View>
       <ScrollView>
-        {trains.map((train) => (
-          <View key={train.id} style={styles.trainContainer}>
-            <View style={styles.trainInfo}>
+        {buses.map((bus) => (
+          <View key={bus.id} style={styles.busContainer}>
+            <View style={styles.busInfo}>
               <FontAwesome5 name="bus" size={36} color="orange" />
-              <Text style={styles.trainRoute}>{train.route}</Text>
+              <Text style={styles.busRoute}>{bus.route}</Text>
             </View>
-            <View style={styles.trainStatus}>
+            <View style={styles.busStatus}>
               <Text style={styles.congestionText}>
-                Congestión: {train.congestion}%
+                Congestión: {bus.congestion}%
               </Text>
               <Text style={styles.updateText}>
-                Última actualización: {train.lastUpdate}
+                Última actualización: {bus.lastUpdate}
               </Text>
             </View>
           </View>
@@ -103,28 +103,28 @@ const styles = StyleSheet.create({
     fontFamily: "inter-b",
     fontSize: 20,
   },
-  trainContainer: {
+  busContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#666",
   },
-  trainInfo: {
+  busInfo: {
     flex: 1,
     alignItems: "center",
     marginRight: "10%",
   },
-  trainStatus: {
+  busStatus: {
     flex: 1,
     alignItems: "center",
   },
-  trainLine: {
+  busLine: {
     color: "#3085C3",
     fontFamily: "inter-sb",
     fontSize: 16,
   },
-  trainRoute: {
+  busRoute: {
     color: "white",
     fontFamily: "inter-sb",
     fontSize: 16,
