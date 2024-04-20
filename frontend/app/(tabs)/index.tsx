@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const Home = () => {
+  const [lines, setLines] = useState([]);
+
+  useEffect(() => {
+    fetch("http://192.168.1.200:8081/api/auth/estacion/all")
+      .then((response) => response.json())
+      .then((data) => setLines(data));
+
+    console.log(lines);
+  }, []);
+
   const buses = [
     {
       id: 1,

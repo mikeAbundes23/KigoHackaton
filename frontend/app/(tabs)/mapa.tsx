@@ -10,7 +10,7 @@ import {
 import MapView, { Polyline, Marker } from "react-native-maps";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { StatusBar } from "expo-status-bar";
-import ProgressBar from "../ProgressBar";
+import ProgressBar from "../../components/ProgressBar";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function App() {

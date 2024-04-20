@@ -1,18 +1,20 @@
-import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native-gesture-handler";
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const Bus = () => {
-  const buses = [
+  const [buses, setBuses] = useState([]);
+
+  const buses1 = [
     {
       id: 1,
       line: "Línea 1",
       route: "L1-001",
       congestion: 42,
       lastUpdate: "2024-04-12 09:30",
-      station: "Tlaxcalancingo"
+      station: "Tlaxcalancingo",
     },
     {
       id: 2,
@@ -20,7 +22,7 @@ const Bus = () => {
       route: "L1-002",
       congestion: 87,
       lastUpdate: "2024-04-12 09:35",
-      station: "Emiliano Zapata"
+      station: "Emiliano Zapata",
     },
     {
       id: 3,
@@ -28,7 +30,7 @@ const Bus = () => {
       route: "L1-003",
       congestion: 55,
       lastUpdate: "2024-04-12 09:50",
-      station: "Casa de Ángeles"
+      station: "Casa de Ángeles",
     },
     {
       id: 4,
@@ -36,7 +38,7 @@ const Bus = () => {
       route: "L1-004",
       congestion: 90,
       lastUpdate: "2024-04-12 10:05",
-      station: "Carmen Serdán"
+      station: "Carmen Serdán",
     },
     {
       id: 5,
@@ -44,7 +46,7 @@ const Bus = () => {
       route: "L1-005",
       congestion: 25,
       lastUpdate: "2024-04-12 10:10",
-      station: "Niño Poblano"
+      station: "Niño Poblano",
     },
   ];
 
@@ -62,17 +64,15 @@ const Bus = () => {
         </Text>
       </View>
       <ScrollView>
-        {buses.map((bus) => (
+        {buses1.map((bus) => (
           <View key={bus.id} style={styles.busContainer}>
             <View style={styles.busInfo}>
               <FontAwesome5 name="bus" size={38} color="orange" />
-              
+
               <Text style={styles.busRoute}>{bus.route}</Text>
             </View>
             <View style={styles.busStatus}>
-              <Text style={styles.congestionText}>
-                Estación: {bus.station}
-              </Text>
+              <Text style={styles.congestionText}>{bus.station}</Text>
               <Text style={styles.congestionText}>
                 Congestión: {bus.congestion}%
               </Text>
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#666",
+    alignItems: "center",
   },
   busInfo: {
     flex: 1,
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   },
   busStatus: {
     flex: 1,
-    alignItems: "center",
+    gap: 5,
   },
   busLine: {
     color: "#3085C3",
@@ -133,16 +134,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "inter-sb",
     fontSize: 16,
+    marginTop: 10,
   },
   congestionText: {
     color: "white",
-    fontFamily: "inter-r",
-    fontSize: 16,
+    fontFamily: "inter-b",
+    fontSize: 14,
   },
   updateText: {
     color: "#666",
     fontFamily: "inter-r",
     fontSize: 14,
-    marginTop: 5,
   },
 });
