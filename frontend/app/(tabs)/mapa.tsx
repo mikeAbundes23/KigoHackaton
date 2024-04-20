@@ -32,7 +32,6 @@ export default function App() {
     { latitude: 19.035, longitude: -98.2583 }, // 02 Casa de Angeles
     { latitude: 19.0363, longitude: -98.2513 }, // 03 Carmen Serdán
     { latitude: 19.0373, longitude: -98.2476 }, // 04 Niño Poblano
-    { latitude: 19.0393, longitude: -98.2416 }, // 05 Estrellas del Sur
   ];
 
   const metroStations = [
@@ -57,15 +56,10 @@ export default function App() {
       longitude: -98.2513,
     }, // 03 Carmen Serdán
     {
-      name: "Pino Suarez",
+      name: "Niño Poblano",
       latitude: 19.0373,
       longitude: -98.2476,
     }, // 04 Niño Poblano
-    {
-      name: "Pino Suarez",
-      latitude: 19.0393,
-      longitude: -98.2416,
-    }, // 05 Estrellas del Sur
   ];
 
   return (
@@ -79,8 +73,7 @@ export default function App() {
             longitude: -98.2553,
             latitudeDelta: 0.055,
             longitudeDelta: 0.025,
-          }}
-        >
+          }}>
           <Polyline
             coordinates={coordinates}
             strokeColor="orange" // Color
@@ -97,8 +90,7 @@ export default function App() {
               onPress={() => {
                 handleSnapPress(0);
                 setStationSelected(station.name);
-              }}
-            >
+              }}>
               <View
                 style={{
                   width: 37,
@@ -107,8 +99,7 @@ export default function App() {
                   borderRadius: 100,
                   alignItems: "center",
                   justifyContent: "center",
-                }}
-              >
+                }}>
                 <FontAwesome5 name="bus" size={30} color="orange" />
               </View>
             </Marker>
@@ -137,16 +128,14 @@ export default function App() {
                 marginTop: 15,
               }}
             />
-          )}
-        >
+          )}>
           <BottomSheetView style={styles.bottomSheet}>
             <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
-              }}
-            >
+              }}>
               <Text style={[styles.bottomSheetText, styles.bigText]}>
                 {stationSelected}
               </Text>
@@ -171,35 +160,36 @@ export default function App() {
               </View>
             </View>
             <View style={[styles.minimalistContainer, styles.sectionContainer]}>
-  <View style={styles.progressSection}>
-    <Text style={[styles.bottomSheetText, styles.smallText]}>
-      Direccion Tlaxcalancingo{"\n"}
-      Siguiente metro:{" "}
-      <Text style={[styles.bottomSheetText]}>2 min</Text>
-    </Text>
-    <ProgressBar stepCount={4} currStep={3} colorScheme="light" />
-  </View>
-  <View>
-    <Text style={[styles.bottomSheetText, styles.smallTextSecond]}>
-      Capacidad:{" "}
-    </Text>
-    <Text style={[styles.bottomSheetText]}>22%</Text>
-  </View>
-</View>
-<View style={styles.buttonContainer}>
-  <TouchableOpacity
-    style={[styles.button]}
-    onPress={() => {
-      // Función para manejar la acción del botón
-    }}
-  >
-    <Text style={[styles.buttonText, { fontWeight: "bold", color: "white" }]}>
-      Check More Info
-    </Text>
-  </TouchableOpacity>
-</View>
-
-            
+              <View style={styles.progressSection}>
+                <Text style={[styles.bottomSheetText, styles.smallText]}>
+                  Direccion Tlaxcalancingo{"\n"}
+                  Siguiente metro:{" "}
+                  <Text style={[styles.bottomSheetText]}>2 min</Text>
+                </Text>
+                <ProgressBar stepCount={4} currStep={3} colorScheme="light" />
+              </View>
+              <View>
+                <Text style={[styles.bottomSheetText, styles.smallTextSecond]}>
+                  Capacidad:{" "}
+                </Text>
+                <Text style={[styles.bottomSheetText]}>22%</Text>
+              </View>
+            </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.button]}
+                onPress={() => {
+                  // Función para manejar la acción del botón
+                }}>
+                <Text
+                  style={[
+                    styles.buttonText,
+                    { fontWeight: "bold", color: "white" },
+                  ]}>
+                  Check More Info
+                </Text>
+              </TouchableOpacity>
+            </View>
           </BottomSheetView>
         </BottomSheet>
       </View>
@@ -211,22 +201,21 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 10, 
+    marginBottom: 10,
   },
   button: {
     marginTop: 10,
-    backgroundColor: "#cf6209",  //#b95504
-    paddingVertical: 8, 
-    paddingHorizontal: 20, 
-    borderRadius: 10, 
-    alignSelf: "stretch", 
+    backgroundColor: "#cf6209", //#b95504
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignSelf: "stretch",
     width: "90%",
     alignItems: "center",
     height: 45,
     justifyContent: "center",
   },
-  
-  
+
   minimalistContainer: {
     backgroundColor: "#1e1e1e",
     borderRadius: 10,
@@ -254,7 +243,7 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
- 
+
   buttonText: {
     color: "white",
   },

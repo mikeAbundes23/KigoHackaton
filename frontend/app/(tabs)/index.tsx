@@ -2,48 +2,44 @@ import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native-gesture-handler";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const Home = () => {
   const trains = [
     {
       id: 1,
       line: "Línea 2",
-      route: "Hidalgo",
+      route: "Tlaxcalancingo",
       congestion: 65,
       lastUpdate: "2024-04-12 10:30",
-      image: require("../../assets/images/hidalgo.png"),
     },
     {
       id: 2,
       line: "Línea 2",
-      route: "Bellas Artes",
+      route: "Emiliano Zapata",
       congestion: 80,
       lastUpdate: "2024-04-12 10:25",
-      image: require("../../assets/images/bellasartes.png"),
     },
     {
       id: 3,
       line: "Línea 2",
-      route: "Allende",
+      route: "Casa de Angeles",
       congestion: 50,
       lastUpdate: "2024-04-12 10:20",
-      image: require("../../assets/images/allende.png"),
     },
     {
       id: 4,
       line: "Línea 2",
-      route: "Zócalo",
+      route: "Carmen Serdán",
       congestion: 30,
       lastUpdate: "2024-04-12 10:15",
-      image: require("../../assets/images/zocalo.png"),
     },
     {
       id: 5,
       line: "Línea 2",
-      route: "Pino Suarez",
+      route: "Niño Poblano",
       congestion: 70,
       lastUpdate: "2024-04-12 10:10",
-      image: require("../../assets/images/pinosuarez.png"),
     },
   ];
 
@@ -55,22 +51,20 @@ const Home = () => {
         <Text
           style={[
             styles.headerText,
-            { fontSize: 16, color: "white", fontFamily: "inter-sb" },
+            {
+              fontSize: 16,
+              color: "white",
+              fontFamily: "inter-sb",
+            },
           ]}>
-          Cuatro Caminos - Tasqueña
+          Tlaxcalancingo - Chachapa
         </Text>
       </View>
       <ScrollView>
         {trains.map((train) => (
           <View key={train.id} style={styles.trainContainer}>
             <View style={styles.trainInfo}>
-              <Image
-                source={train.image}
-                style={{
-                  width: 50,
-                  height: 50,
-                }}
-              />
+              <FontAwesome5 name="bus" size={36} color="orange" />
               <Text style={styles.trainRoute}>{train.route}</Text>
             </View>
             <View style={styles.trainStatus}>
@@ -134,6 +128,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "inter-sb",
     fontSize: 16,
+    marginTop: 15,
   },
   congestionText: {
     color: "white",
