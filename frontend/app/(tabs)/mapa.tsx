@@ -11,6 +11,7 @@ import MapView, { Polyline, Marker } from "react-native-maps";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { StatusBar } from "expo-status-bar";
 import ProgressBar from '../ProgressBar'; 
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,44 +27,45 @@ export default function App() {
   }, []);
 
   const coordinates = [
-    { latitude: 19.4374, longitude: -99.147 }, // Hidalgo
-    { latitude: 19.4361, longitude: -99.1406 }, // Bellas Artes
-    { latitude: 19.43555, longitude: -99.13715 }, // Allende
-    { latitude: 19.4323, longitude: -99.1324 }, // Zócalo
-    { latitude: 19.4248, longitude: -99.1333 }, // Pino Suárez
+    { latitude: 19.0329, longitude: -98.2687 }, // Terminal Tlaxcalancingo
+    { latitude: 19.0335, longitude: -98.2626 }, // 01 Emiliano Zapata
+    { latitude: 19.0350, longitude: -98.2583 }, // 02 Casa de Angeles
+    { latitude: 19.0363, longitude: -98.2513 }, // 03 Carmen Serdán
+    { latitude: 19.0373, longitude: -98.2476 }, // 04 Niño Poblano
+    { latitude: 19.0393, longitude: -98.2416 }, // 05 Estrellas del Sur
   ];
 
   const metroStations = [
     {
-      name: "Hidalgo",
-      latitude: 19.4374,
-      longitude: -99.147,
-      image: require("../../assets/images/hidalgo.png"),
-    }, // Hidalgo
+      name: "Tlaxcalancingo",
+      latitude: 19.0329,
+      longitude: -98.2687,
+    }, // Terminal Tlaxcalancingo
     {
-      name: "Bellas Artes",
-      latitude: 19.4361,
-      longitude: -99.1406,
-      image: require("../../assets/images/bellasartes.png"),
-    }, // Bellas Artes
+      name: "Emiliano Zapata",
+      latitude: 19.0335,
+      longitude: -98.2626,
+    }, // 01 Emiliano Zapata
     {
-      name: "Allende",
-      latitude: 19.43555,
-      longitude: -99.13715,
-      image: require("../../assets/images/allende.png"),
-    }, // Allende
+      name: "Casa de Angeles",
+      latitude: 19.0350,
+      longitude: -98.2583,
+    }, // 02 Casa de Angeles
     {
-      name: "Zocalo",
-      latitude: 19.4323,
-      longitude: -99.1324,
-      image: require("../../assets/images/zocalo.png"),
-    }, // Zócalo
+      name: "Carmen Serdán",
+      latitude: 19.0363,
+      longitude: -98.2513,
+    }, // 03 Carmen Serdán
     {
       name: "Pino Suarez",
-      latitude: 19.4248,
-      longitude: -99.1333,
-      image: require("../../assets/images/pinosuarez.png"),
-    }, // Pino Suárez
+      latitude: 19.0373,
+      longitude: -98.2476,
+    }, // 04 Niño Poblano
+    {
+      name: "Pino Suarez",
+      latitude: 19.0393,
+      longitude: -98.2416,
+    }, // 05 Estrellas del Sur
   ];
 
   return (
@@ -73,14 +75,14 @@ export default function App() {
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: 19.4326,
-            longitude: -99.1407,
+            latitude: 19.0350,
+            longitude: -98.2583,
             latitudeDelta: 0.0322,
             longitudeDelta: 0.0221,
           }}>
           <Polyline
             coordinates={coordinates}
-            strokeColor="#0000FF" // Color
+            strokeColor="orange" // Color
             strokeWidth={5} // Width
           ></Polyline>
 
@@ -96,11 +98,13 @@ export default function App() {
                 setStationSelected(station.name);
               }}
               >
-              <Image 
-                source={station.image} 
-                style={{ width: 37, height: 37, borderRadius: 100 }} 
-                resizeMode={"cover"} 
-              />
+              <View style={{ width: 37, height: 37, backgroundColor: "white", borderRadius: 100, alignItems: "center", justifyContent: "center"}}>
+                <FontAwesome5 
+                  name="bus" 
+                  size={30} 
+                  color="orange" 
+                />
+              </View>
             </Marker>
           ))}
         </MapView>
@@ -136,7 +140,7 @@ export default function App() {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View>
             <Text style={[styles.bottomSheetText, styles.smallText]}>
-                Direccion Indios Verdes{"\n"}
+                Direccion Chachapa{"\n"}
                 Tiempo para siguiente metro:{" "}
                 <Text style={[styles.bottomSheetText]}>7 min</Text>
             </Text>
