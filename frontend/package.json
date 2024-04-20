@@ -17,6 +17,7 @@
     "@gorhom/bottom-sheet": "^4.6.1",
     "@react-navigation/native": "^6.0.2",
     "@types/react-dom": "^18.2.25",
+    "axios": "^1.6.8",
     "expo": "~50.0.14",
     "expo-font": "~11.10.3",
     "expo-linking": "~6.2.2",
