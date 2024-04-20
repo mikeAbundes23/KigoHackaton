@@ -10,14 +10,14 @@ import {
 import MapView, { Polyline, Marker } from "react-native-maps";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { StatusBar } from "expo-status-bar";
-import ProgressBar from '../ProgressBar'; 
+import ProgressBar from "../ProgressBar";
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(false);
   const sheetRef = useRef<BottomSheet>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [stationSelected, setStationSelected] = useState<string>("");
-
+  const [stationSelectedImage, setStationSelectedImage] = useState<any>(null);
   const snapPoints = isOpen ? ["50%"] : [0.1];
 
   const handleSnapPress = useCallback((index: number) => {
@@ -77,11 +77,12 @@ export default function App() {
             longitude: -99.1407,
             latitudeDelta: 0.0322,
             longitudeDelta: 0.0221,
-          }}>
+          }}
+        >
           <Polyline
             coordinates={coordinates}
-            strokeColor="#0000FF" // Color
-            strokeWidth={5} // Width
+            strokeColor="#0000FF"
+            strokeWidth={5}
           ></Polyline>
 
           {metroStations.map((station, index) => (
@@ -94,12 +95,13 @@ export default function App() {
               onPress={() => {
                 handleSnapPress(0);
                 setStationSelected(station.name);
+                setStationSelectedImage(station.image);
               }}
-              >
-              <Image 
-                source={station.image} 
-                style={{ width: 37, height: 37, borderRadius: 100 }} 
-                resizeMode={"cover"} 
+            >
+              <Image
+                source={station.image}
+                style={{ width: 37, height: 37, borderRadius: 100 }}
+                resizeMode={"cover"}
               />
             </Marker>
           ))}
@@ -127,27 +129,48 @@ export default function App() {
                 marginTop: 15,
               }}
             />
-          )}>
+          )}
+        >
           <BottomSheetView style={styles.bottomSheet}>
-            <Text style={[styles.bottomSheetText, styles.bigText]}>
-              {stationSelected}
-            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={[styles.bottomSheetText, styles.bigText]}>
+                {stationSelected}
+              </Text>
+              <Image
+                source={stationSelectedImage}
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 100,
+                  marginRight: 20,
+                }}
+                resizeMode={"cover"}
+              />
+            </View>
             <View style={styles.line}></View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View>
-            <Text style={[styles.bottomSheetText, styles.smallText]}>
-                Direccion Indios Verdes{"\n"}
-                Tiempo para siguiente metro:{" "}
-                <Text style={[styles.bottomSheetText]}>7 min</Text>
-            </Text>
-            </View>
-            </View>
-            <ProgressBar stepCount={4} currStep={2} colorScheme="light" />
+            <View style={[styles.minimalistContainer, styles.sectionContainer]}>
+  <View style={styles.progressSection}>
+    <Text style={[styles.bottomSheetText, styles.smallText]}>
+      Direccion Indios Verdes{"\n"}
+      Siguiente metro:{" "}
+      <Text style={[styles.bottomSheetText]}>7 min</Text>
+    </Text>
+    <ProgressBar stepCount={4} currStep={2} colorScheme="light" />
+  </View>
+  <View>
+    <Text style={[styles.bottomSheetText, styles.smallTextSecond]}>
+      Capacidad:{" "}
+    </Text>
+    <Text style={[styles.bottomSheetText]}>50%</Text>
+  </View>
+</View>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-              <Text style={[styles.bottomSheetText,  styles.smallText]}>Capacidad: </Text>
-              <Text style={[styles.bottomSheetText, { marginTop: 15 }]}>50%</Text>
-            </View>
           </BottomSheetView>
         </BottomSheet>
       </View>
@@ -155,8 +178,25 @@ export default function App() {
   );
 }
 
-
 const styles = StyleSheet.create({
+  minimalistContainer: {
+    backgroundColor: "#1e1e1e",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#303030",
+    padding: 10,
+    marginBottom: 10,
+  },
+  sectionContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  progressSection: {
+    flex: 1,
+  },
+  
+  
   safeArea: {
     flex: 1,
     backgroundColor: "black",
@@ -191,10 +231,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: "left",
     fontWeight: "bold",
-    fontFamily: "inter-sb",
-    alignSelf: "center",
+    fontFamily: "inter-b",
+
+    //alignSelf: "center",
+    marginBottom: 7,
+    //alignSelf: "center",
   },
-  
+
   smallText: {
     fontSize: 16,
     textAlign: "left",
@@ -202,7 +245,12 @@ const styles = StyleSheet.create({
     fontFamily: "inter-r",
     //alignSelf: "center",
     marginTop: 20,
-
+  },
+  smallTextSecond: {
+    fontSize: 16,
+    textAlign: "left",
+    fontWeight: "normal",
+    fontFamily: "inter-r",
   },
   modalBackground: {
     backgroundColor: "rgba(0, 0, 0, .75)",

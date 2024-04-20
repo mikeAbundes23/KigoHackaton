@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native-gesture-handler";
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
 
 const Tren = () => {
   const trains = [
@@ -12,7 +12,7 @@ const Tren = () => {
       route: "L2-001",
       congestion: 42,
       lastUpdate: "2024-04-12 09:30",
-      station: "Bellas Artes"
+      station: "Bellas Artes",
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ const Tren = () => {
       route: "L2-002",
       congestion: 87,
       lastUpdate: "2024-04-12 09:35",
-      station: "Zócalo"
+      station: "Zócalo",
     },
     {
       id: 3,
@@ -28,7 +28,7 @@ const Tren = () => {
       route: "L2-003",
       congestion: 55,
       lastUpdate: "2024-04-12 09:50",
-      station: "Allende"
+      station: "Allende",
     },
     {
       id: 4,
@@ -36,7 +36,7 @@ const Tren = () => {
       route: "L2-004",
       congestion: 90,
       lastUpdate: "2024-04-12 10:05",
-      station: "Hidalgo"
+      station: "Hidalgo",
     },
     {
       id: 5,
@@ -44,7 +44,7 @@ const Tren = () => {
       route: "L2-005",
       congestion: 25,
       lastUpdate: "2024-04-12 10:10",
-      station: "Pino Suárez"
+      station: "Pino Suárez",
     },
     {
       id: 6,
@@ -52,7 +52,7 @@ const Tren = () => {
       route: "L2-006",
       congestion: 19,
       lastUpdate: "2024-04-12 10:30",
-      station: "Bellas Artes"
+      station: "Bellas Artes",
     },
   ];
 
@@ -65,7 +65,8 @@ const Tren = () => {
           style={[
             styles.headerText,
             { fontSize: 16, color: "white", fontFamily: "inter-sb" },
-          ]}>
+          ]}
+        >
           Cuatro Caminos - Tasqueña
         </Text>
       </View>
@@ -74,7 +75,7 @@ const Tren = () => {
           <View key={train.id} style={styles.trainContainer}>
             <View style={styles.trainInfo}>
               <FontAwesome name="train" size={38} color="white" />
-              
+
               <Text style={styles.trainRoute}>{train.route}</Text>
             </View>
             <View style={styles.trainStatus}>
