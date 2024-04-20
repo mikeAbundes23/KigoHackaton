@@ -1,54 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { View, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { useFocusEffect } from "expo-router";
+import { TrenService } from "@/services/tren.service";
 import { StatusBar } from "expo-status-bar";
-import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-const Bus = () => {
-  const [buses, setBuses] = useState([]);
+interface Bus {
+  idtren: number;
+  linea: number;
+  estacion: number;
+  concurrencia: number;
+  fecha: string;
+  capacidad: number;
+  matricula: string;
+  sentido: string;
+}
 
-  const buses1 = [
-    {
-      id: 1,
-      line: "Línea 1",
-      route: "L1-001",
-      congestion: 42,
-      lastUpdate: "2024-04-12 09:30",
-      station: "Tlaxcalancingo",
-    },
-    {
-      id: 2,
-      line: "Línea 1",
-      route: "L1-002",
-      congestion: 87,
-      lastUpdate: "2024-04-12 09:35",
-      station: "Emiliano Zapata",
-    },
-    {
-      id: 3,
-      line: "Línea 1",
-      route: "L1-003",
-      congestion: 55,
-      lastUpdate: "2024-04-12 09:50",
-      station: "Casa de Ángeles",
-    },
-    {
-      id: 4,
-      line: "Línea 1",
-      route: "L1-004",
-      congestion: 90,
-      lastUpdate: "2024-04-12 10:05",
-      station: "Carmen Serdán",
-    },
-    {
-      id: 5,
-      line: "Línea 1",
-      route: "L1-005",
-      congestion: 25,
-      lastUpdate: "2024-04-12 10:10",
-      station: "Niño Poblano",
-    },
-  ];
+const Bus = () => {
+  const [buses, setBuses] = useState<Bus[]>([]);
+  const [fetchInterval, setFetchInterval] = useState<any>(null);
+
+  const trenService = new TrenService();
+
+  const fetchBuses = async () => {
+    const buses = await trenService.getAllTrenes();
+
+    console.log(buses);
+
+    setBuses(buses);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchBuses();
+      const intervalId = setInterval(fetchBuses, 9000);
+      setFetchInterval(intervalId);
+
+      return () => clearInterval(fetchInterval);
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -64,24 +54,57 @@ const Bus = () => {
         </Text>
       </View>
       <ScrollView>
-        {buses1.map((bus) => (
-          <View key={bus.id} style={styles.busContainer}>
-            <View style={styles.busInfo}>
-              <FontAwesome5 name="bus" size={38} color="orange" />
+        {buses.map((bus) => {
+          const estacion =
+            bus.estacion === 1
+              ? "Tlaxcalancingo"
+              : bus.estacion === 2
+              ? "Emiliano Zapata"
+              : bus.estacion === 3
+              ? "Casa de los Angeles"
+              : bus.estacion === 4
+              ? "Carmen Serdán"
+              : "Niño Poblano";
 
-              <Text style={styles.busRoute}>{bus.route}</Text>
+          const direccion = bus.sentido === "I" ? "Ida" : "Vuelta";
+
+          const congestion = (bus.concurrencia / bus.capacidad) * 100;
+
+          return (
+            <View key={bus.idtren} style={styles.busContainer}>
+              <View style={styles.busInfo}>
+                <FontAwesome5 name="bus" size={38} color="orange" />
+
+                <Text style={styles.congestionText}>{estacion}</Text>
+              </View>
+              <View style={styles.busStatus}>
+                <Text style={[styles.congestionText, { color: "white" }]}>
+                  {direccion}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}>
+                  <Text
+                    style={[
+                      styles.congestionText,
+                      { color: "white", marginTop: 0 },
+                    ]}>
+                    Congestión:{" "}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.congestionText,
+                      { color: "orange", marginTop: 0 },
+                    ]}>
+                    {congestion.toFixed(2)}%
+                  </Text>
+                </View>
+                <Text style={styles.updateText}>{bus.fecha}</Text>
+              </View>
             </View>
-            <View style={styles.busStatus}>
-              <Text style={styles.congestionText}>{bus.station}</Text>
-              <Text style={styles.congestionText}>
-                Congestión: {bus.congestion}%
-              </Text>
-              <Text style={styles.updateText}>
-                Última actualización: {bus.lastUpdate}
-              </Text>
-            </View>
-          </View>
-        ))}
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -140,6 +163,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "inter-b",
     fontSize: 14,
+    marginTop: 15,
   },
   updateText: {
     color: "#666",

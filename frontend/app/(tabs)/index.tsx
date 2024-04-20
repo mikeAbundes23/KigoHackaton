@@ -1,57 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { EstacionService } from "@/services/estacion.service";
+import { useFocusEffect } from "expo-router";
+
+interface Estacion {
+  idestacion: number;
+  numero_estacion: number;
+  concurrencia: number;
+  concurrencia_maxima: number;
+  fecha: string;
+}
 
 const Home = () => {
-  const [lines, setLines] = useState([]);
+  const [lines, setLines] = useState<Estacion[]>([]);
+  const [fetchInterval, setFetchInterval] = useState<any>(null);
 
-  useEffect(() => {
-    fetch("http://192.168.1.200:8081/api/auth/estacion/all")
-      .then((response) => response.json())
-      .then((data) => setLines(data));
+  const trenService = new EstacionService();
 
-    console.log(lines);
-  }, []);
+  const fetchLines = async () => {
+    const lines = await trenService.getAll();
 
-  const buses = [
-    {
-      id: 1,
-      line: "Línea 1",
-      route: "Tlaxcalancingo",
-      congestion: 65,
-      lastUpdate: "2024-04-12 10:30",
-    },
-    {
-      id: 2,
-      line: "Línea 1",
-      route: "Emiliano Zapata",
-      congestion: 80,
-      lastUpdate: "2024-04-12 10:25",
-    },
-    {
-      id: 3,
-      line: "Línea 1",
-      route: "Casa de Angeles",
-      congestion: 50,
-      lastUpdate: "2024-04-12 10:20",
-    },
-    {
-      id: 4,
-      line: "Línea 1",
-      route: "Carmen Serdán",
-      congestion: 30,
-      lastUpdate: "2024-04-12 10:15",
-    },
-    {
-      id: 5,
-      line: "Línea 1",
-      route: "Niño Poblano",
-      congestion: 70,
-      lastUpdate: "2024-04-12 10:10",
-    },
-  ];
+    setLines(lines);
+  };
+
+  // Utiliza useFocusEffect para ejecutar el fetch cuando la pantalla obtiene el foco
+  useFocusEffect(
+    useCallback(() => {
+      fetchLines();
+      const intervalId = setInterval(fetchLines, 9000);
+      setFetchInterval(intervalId);
+
+      // Al salir de la pantalla, limpiar el intervalo
+      return () => clearInterval(fetchInterval);
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,22 +56,40 @@ const Home = () => {
         </Text>
       </View>
       <ScrollView>
-        {buses.map((bus) => (
-          <View key={bus.id} style={styles.busContainer}>
-            <View style={styles.busInfo}>
-              <FontAwesome5 name="bus" size={36} color="orange" />
-              <Text style={styles.busRoute}>{bus.route}</Text>
+        {lines.map((line) => {
+          const nombre =
+            line.numero_estacion === 1
+              ? "Tlaxcalancingo"
+              : line.numero_estacion === 2
+              ? "Emiliano Zapata"
+              : line.numero_estacion === 3
+              ? "Casa de los Angeles"
+              : line.numero_estacion === 4
+              ? "Carmen Serdán"
+              : "Niño Poblano";
+
+          return (
+            <View key={line.idestacion} style={styles.busContainer}>
+              <View style={styles.busInfo}>
+                <FontAwesome5 name="bus" size={36} color="orange" />
+                <Text style={styles.busRoute}>{nombre}</Text>
+              </View>
+              <View style={styles.busStatus}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}>
+                  <Text style={styles.congestionText}>Congestión: </Text>
+                  <Text
+                    style={[styles.congestionText, { fontFamily: "inter-b" }]}>
+                    {line.concurrencia}
+                  </Text>
+                </View>
+                <Text style={styles.updateText}>{line.fecha}</Text>
+              </View>
             </View>
-            <View style={styles.busStatus}>
-              <Text style={styles.congestionText}>
-                Congestión: {bus.congestion}%
-              </Text>
-              <Text style={styles.updateText}>
-                Última actualización: {bus.lastUpdate}
-              </Text>
-            </View>
-          </View>
-        ))}
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -127,7 +130,6 @@ const styles = StyleSheet.create({
   },
   busStatus: {
     flex: 1,
-    alignItems: "center",
   },
   busLine: {
     color: "#3085C3",
